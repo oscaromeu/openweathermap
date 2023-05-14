@@ -14,7 +14,7 @@ func main() {
 		os.Exit(1)
 	}
 	if len(os.Args) < 2 {
-		fmt.Fprintf(os.Stderr, "Usage: %s LOCATION\n\nExample: %[1]s London,UK\n", os.Args[0])
+		fmt.Fprintf(os.Stderr, "Usage: %s LOCATION\n\nExample: %[1]s Barcelona,ES\n", os.Args[0])
 		os.Exit(1)
 	}
 	location := os.Args[1]
@@ -23,5 +23,10 @@ func main() {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
-	fmt.Printf("%s %.1fºC %.1fºC\n", conditions.Summary, conditions.Temperature.Celsius(), conditions.FeelsLike.Celsius())
+
+	fmt.Printf("%s %.1fºC %.1fºC \n",
+		conditions.Summary,
+		conditions.Temperature.Celsius(),
+		conditions.FeelsLike.Celsius(),
+	)
 }
