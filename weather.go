@@ -5,12 +5,14 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"os"
 )
 
 type Conditions struct {
 	Summary     string
 	Temperature Temperature
+	FeelsLike   Temperature
+	TempMin     Temperature
+	TempMax     Temperature
 }
 
 type Temperature float64
@@ -24,7 +26,12 @@ type OWMResponse struct {
 		Main string
 	}
 	Main struct {
-		Temp float64
+		Temp      float64 `json:"temp"`
+		FeelsLike float64 `json:"feels_like"`
+		TempMin   float64 `json:"temp_min"`
+		TempMax   float64 `json:"temp_max"`
+		Pressure  float64 `json:"pressure"`
+		Humidity  float64 `json:"humidity"`
 	}
 }
 
@@ -37,9 +44,11 @@ func ParseResponse(data []byte) (Conditions, error) {
 	if len(resp.Weather) < 1 {
 		return Conditions{}, fmt.Errorf("invalid API response %s: want at least one Weather element", data)
 	}
+
 	conditions := Conditions{
 		Summary:     resp.Weather[0].Main,
 		Temperature: Temperature(resp.Main.Temp),
+		FeelsLike:   Temperature(resp.Main.FeelsLike),
 	}
 	return conditions, nil
 }
@@ -90,23 +99,4 @@ func Get(location, key string) (Conditions, error) {
 		return Conditions{}, err
 	}
 	return conditions, nil
-}
-
-func RunCLI() {
-	key := os.Getenv("OPENWEATHERMAP_API_KEY")
-	if key == "" {
-		fmt.Fprintln(os.Stderr, "Please set the environment variable OPENWEATHERMAP_API_KEY.")
-		os.Exit(1)
-	}
-	if len(os.Args) < 2 {
-		fmt.Fprintf(os.Stderr, "Usage: %s LOCATION\n\nExample: %[1]s London,UK\n", os.Args[0])
-		os.Exit(1)
-	}
-	location := os.Args[1]
-	conditions, err := Get(location, key)
-	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
-		os.Exit(1)
-	}
-	fmt.Printf("%s %.1fºC\n", conditions.Summary, conditions.Temperature.Celsius())
 }
