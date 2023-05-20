@@ -48,7 +48,6 @@ func ParseResponse(data []byte) (Conditions, error) {
 	conditions := Conditions{
 		Summary:     resp.Weather[0].Main,
 		Temperature: Temperature(resp.Main.Temp),
-		FeelsLike:   Temperature(resp.Main.FeelsLike),
 	}
 	return conditions, nil
 }

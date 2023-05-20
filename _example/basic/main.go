@@ -24,9 +24,8 @@ func main() {
 		os.Exit(1)
 	}
 
-	fmt.Printf("%s %.1fºC %.1fºC \n",
+	fmt.Printf("%s %.1fºC \n",
 		conditions.Summary,
 		conditions.Temperature.Celsius(),
-		conditions.FeelsLike.Celsius(),
 	)
 }
