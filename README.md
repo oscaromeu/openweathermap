@@ -1,6 +1,9 @@
-# OpenWeatherMap Go API
+# OpenWeatherMap Exporter [WIP]
 
-This project is a simple Go (golang) package for use with openweathermap.org's API. Note that it only outputs a few metrics. For a more detailed cover of the OpenWeatherMap API, you can use [briandowns/openweathermap](https://github.com/briandowns/openweathermap).
+Prometheus exporter for openweathermap API written in Go. Note that it supports only a limited set of metrics. For more comprehensive coverage of the OpenWeatherMap API, you may consider using the following resource:
+
++ [briandowns/openweathermap](https://github.com/briandowns/openweathermap)
++ [billykwooten/openweather-exporter](https://github.com/billykwooten/openweather-exporter)
 
 To use the OpenWeatherMap API, you need to obtain an API key. Sign up [here](http://home.openweathermap.org/users/sign_up). Once you have your key, create an environment variable called `OPENWEATHERMAP_API_KEY`. Start coding!
 
